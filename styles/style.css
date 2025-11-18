@@ -18,6 +18,33 @@ body {
     transition: background-color 0.6s ease, color 0.6s ease;
 }
 
+.content {
+    padding-top: 5vh; /* Адаптивный отступ сверху */
+    min-height: 90vh; /* Занимает почти всю высоту экрана */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Выравниваем сверху */
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vh; /* Адаптивный отступ */
+    position: relative;
+}
+
+.academy-logo {
+    width: min(250px, 20vw); /* Адаптивная ширина */
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2vh; /* Адаптивный отступ */
+    animation: logoAnimation 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 135, 0.5));
+}
+
 .container {
     text-align: center;
     position: relative;
@@ -28,71 +55,436 @@ body {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Адаптивный размер шрифта */
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 1.5vh; /* Адаптивный отступ */
     background: linear-gradient(45deg, #00ff87, #60efff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-align: center;
 }
 
 .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
+    font-size: clamp(1rem, 2.5vw, 1.5rem); /* Адаптивный размер */
+    margin-bottom: 4vh; /* Адаптивный отступ */
     color: #8a8a8a;
+    text-align: center;
 }
 
-.course-promo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Основные курсы рядом */
+.main-courses-section {
+    padding: 20px 20px 60px 20px; /* Уменьшил верхний отступ, увеличил нижний */
+    margin-top: -20px; /* Поднимаем блок выше */
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.course-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 40px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
-.course-details {
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 255, 135, 0.2);
+}
+
+.course-card.pro-course:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(148, 0, 255, 0.2);
+}
+
+.free-course {
+    background: linear-gradient(135deg, rgba(0, 255, 135, 0.1), rgba(96, 239, 255, 0.1));
+    border: 1px solid rgba(0, 255, 135, 0.2);
+}
+
+.pro-course {
+    background: linear-gradient(135deg, rgba(148, 0, 255, 0.1), rgba(255, 0, 150, 0.1));
+    border: 1px solid rgba(148, 0, 255, 0.2);
+}
+
+/* Общие стили для обоих курсов */
+.course-card .course-details {
     text-align: left;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.course-details h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+.course-card .course-details h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 25px;
+    color: #fff;
+    text-align: center;
+}
+
+.course-card .course-details ul {
+    list-style-type: none;
+    margin-bottom: 30px;
+    display: block;
+    text-align: left;
+    flex: 1;
+}
+
+.course-card .course-details ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+}
+
+/* Цвета точек для разных курсов */
+.free-course .course-details ul li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #00ff87; /* Зеленые точки для бесплатного курса */
+}
+
+.pro-course .course-details ul li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #ff0096; /* Розовые точки для платного курса */
+}
+
+/* Кнопки - выравниваем по низу */
+.course-card .cta-button {
+    display: block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 100%;
+    font-size: 1.1rem;
+    margin-top: auto; /* Прижимаем кнопку к низу */
+}
+
+/* Стили кнопок для разных курсов */
+.free-course .cta-button {
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    color: #000;
+}
+
+.pro-course .cta-button {
+    background: linear-gradient(45deg, #9440ff, #ff0096);
     color: #fff;
 }
 
-.course-details ul {
-    list-style-type: none;
-    margin-bottom: 30px;
+.course-card .cta-button:hover {
+    transform: scale(1.05);
 }
 
-.course-details ul li {
+/* Адаптивность */
+@media (max-width: 968px) {
+    .courses-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+    
+    .course-card {
+        padding: 30px 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-courses-section {
+        padding: 10px 15px 40px 15px; /* Еще меньше отступ на мобильных */
+        margin-top: -10px;
+    }
+    
+    .course-card {
+        padding: 25px 20px;
+    }
+    
+    .course-card .course-details h2 {
+        font-size: 1.4rem;
+    }
+    
+    .course-card .course-details ul li {
+        font-size: 1rem;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .main-courses-section {
+        padding: 5px 10px 30px 10px;
+        margin-top: -5px;
+    }
+}
+
+
+/* Секция "Как мы создали курс" */
+.creation-section {
+    width: 100%;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(10,10,10,0.95) 0%, rgba(20,20,30,0.95) 100%);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin: 60px 0;
+}
+
+.creation-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.creation-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+}
+
+
+.creation-content {
+    text-align: left;
+}
+
+.creation-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #e0e0e0;
+}
+
+.creation-lead {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+.creation-lead em {
+    color: #00ff87;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.problems-solutions {
+    display: flex;
+    gap: 40px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.list-title {
+    font-weight: bold;
+    color: #00ff87;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.creation-text ul {
+    list-style-type: none;
+    margin-bottom: 25px;
+}
+
+.creation-text ul li {
     position: relative;
     padding-left: 25px;
     margin-bottom: 10px;
+    color: #b0b0b0;
 }
 
-.course-details ul li:before {
+.creation-text ul li:before {
     content: '•';
     position: absolute;
     left: 0;
     color: #00ff87;
-}
-
-.cta-button {
-    display: inline-block;
-    background: linear-gradient(45deg, #00ff87, #60efff);
-    color: #000;
-    padding: 12px 24px;
-    text-decoration: none;
-    border-radius: 5px;
     font-weight: bold;
-    transition: transform 0.3s ease;
 }
 
-.cta-button:hover {
-    transform: scale(1.05);
+.stats {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border-left: 3px solid #00ff87;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 15px;
+    min-width: 70px;
+}
+
+.stat-text {
+    color: #e0e0e0;
+    flex: 1;
+}
+
+.creation-conclusion {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(0,255,135,0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(0,255,135,0.2);
+    color: #fff;
+}
+
+/* Адаптивность для мобильных */
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .content {
+        padding-top: 3vh;
+        min-height: 85vh;
+    }
+    
+    .academy-logo {
+        width: min(180px, 25vw);
+        margin-bottom: 1vh;
+    }
+    .main-courses-section {
+        padding: 40px 15px;
+    }
+    
+    .course-card {
+        padding: 25px 20px;
+    }
+    
+    .course-card .course-details h2 {
+        font-size: 1.4rem;
+    }
+    
+    .course-features li,
+    .course-card .course-details ul li {
+        font-size: 1rem;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .content {
+        padding-top: 2vh;
+    }
+    
+    .academy-logo {
+        width: min(150px, 30vw);
+    }
+    
+    .course-promo {
+        padding: 20px 15px;
+    }
+    
+    .course-details ul li {
+        display: block;
+        margin: 0 0 8px 0;
+    }
+}
+
+/* Светлая тема */
+body.light-mode .course-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .free-course {
+    background: linear-gradient(135deg, rgba(255, 138, 0, 0.1), rgba(229, 46, 113, 0.1));
+    border: 1px solid rgba(255, 138, 0, 0.2);
+}
+
+body.light-mode .pro-course {
+    background: linear-gradient(135deg, rgba(148, 0, 255, 0.1), rgba(255, 0, 150, 0.1));
+    border: 1px solid rgba(148, 0, 255, 0.2);
+}
+
+body.light-mode .course-card .course-details ul li {
+    color: #666;
+}
+
+body.light-mode .course-card .course-details h2 {
+    color: #1a1a1a;
+}
+
+/* Цвета точек в светлой теме */
+body.light-mode .free-course .course-details ul li:before {
+    color: #ff8a00; /* Оранжевые точки для бесплатного курса */
+}
+
+body.light-mode .pro-course .course-details ul li:before {
+    color: #e52e71; /* Розовые точки для платного курса */
+}
+
+/* Кнопки в светлой теме */
+body.light-mode .free-course .cta-button {
+    background: linear-gradient(45deg, #ff8a00, #e52e71);
+    color: #fff;
+}
+
+body.light-mode .pro-course .cta-button {
+    background: linear-gradient(45deg, #7b2cbf, #c9184a);
+    color: #fff;
+}
+body.light-mode .creation-section {
+    background: linear-gradient(135deg, rgba(245,245,245,0.95) 0%, rgba(255,255,255,0.95) 100%);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+body.light-mode .creation-text {
+    color: #333;
+}
+
+body.light-mode .creation-lead {
+    color: #000;
+}
+
+body.light-mode .creation-text ul li {
+    color: #555;
+}
+
+body.light-mode .stats {
+    background: rgba(0,0,0,0.05);
+    border-left: 3px solid #ff8a00;
+}
+
+body.light-mode .stat-text {
+    color: #333;
+}
+
+body.light-mode .creation-conclusion {
+    background: rgba(255,138,0,0.1);
+    border: 1px solid rgba(255,138,0,0.2);
+    color: #000;
 }
 
 footer {
@@ -101,7 +493,7 @@ footer {
     left: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
+    padding: 15px 20px;
     text-align: center;
     z-index: 3;
 }
@@ -110,22 +502,40 @@ footer {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .social-links a {
     color: #fff;
-    font-size: 2rem;
-    transition: color 0.3s ease;
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
 }
 
 .social-links a:hover {
     color: #00ff87;
+    transform: translateY(-2px);
 }
 
 .copyright {
     font-size: 0.8rem;
     color: #8a8a8a;
+    line-height: 1.4;
+}
+
+.copyright a {
+    color: #00ff87;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(0, 255, 135, 0.1);
+}
+
+.copyright a:hover {
+    color: #000;
+    background: #00ff87;
+    box-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
 }
 
 canvas {
@@ -150,19 +560,20 @@ canvas {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, rgba(20,20,30,0.9) 0%, rgba(30,30,40,0.9) 100%);
-    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(30,20,40,0.95) 0%, rgba(50,30,60,0.95) 100%);
+    border-radius: 20px;
     padding: 40px;
     max-width: 800px;
     width: 90%;
     position: relative;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(148, 0, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(148, 0, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .close-btn {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 20px;
     color: #fff;
     font-size: 35px;
@@ -171,17 +582,19 @@ canvas {
 }
 
 .close-btn:hover {
-    color: #00ff87;
+    color: #ff0096;
 }
+
 
 .modal-details {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
+    gap: 30px;
 }
 
 .modal-section {
-    width: 48%;
+    flex: 1;
 }
 
 .modal-section h3 {
@@ -206,6 +619,56 @@ canvas {
     left: 0;
     color: #00ff87;
 }
+
+/* Кнопка Приобрести в модалке */
+.modal .cta-button {
+    display: block;
+    background: linear-gradient(45deg, #9440ff, #ff0096);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 200px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.modal .cta-button:hover {
+    transform: scale(1.05);
+}
+
+/* Адаптивность модального окна */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 30px 20px;
+    }
+    
+    .modal-details {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .modal-section {
+        width: 100%;
+    }
+    
+    .close-btn {
+        font-size: 28px;
+        right: 15px;
+        top: 10px;
+    }
+    
+    .modal .cta-button {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
 
 .logo-container {
     display: flex;
@@ -449,14 +912,38 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-/* Светлая тема */
-body.light-mode {
-    background-color: #f6f6f6;
-    color: #000;
-}
 
 body.light-mode .subtitle {
     color: #333;
+}
+
+/* Заголовки с градиентом */
+body.light-mode h1,
+body.light-mode .creation-section h2 {
+    background: linear-gradient(45deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .course-details ul li:before,
+body.light-mode .modal-section ul li:before,
+body.light-mode .creation-text ul li:before {
+    color: #ff8a00;
+}
+
+/* Заголовки в модалке и секциях */
+body.light-mode .course-details h2,
+body.light-mode .modal-section h3,
+body.light-mode .creation-lead em,
+body.light-mode .list-title {
+    color: #ff8a00;
+}
+
+/* Статистика */
+body.light-mode .stat-number {
+    background: linear-gradient(45deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 body.light-mode .course-promo {
@@ -471,6 +958,17 @@ body.light-mode .cta-button {
 
 body.light-mode footer {
     background: rgba(255, 255, 255, 0.8);
+}
+
+body.light-mode .copyright a {
+    color: #ff8a00; /* Оранжевый вместо зеленого */
+    background: rgba(255, 138, 0, 0.15); /* Оранжевый фон */
+}
+
+body.light-mode .copyright a:hover {
+    color: #fff;
+    background: #ff8a00; /* Оранжевый ховер */
+    box-shadow: 0 0 10px rgba(255, 138, 0, 0.5); /* Оранжевая тень */
 }
 
 body.light-mode .social-links a {
@@ -527,7 +1025,7 @@ body.light-mode .social-links a:hover {
 }
 
 #theme-toggle:checked + .theme-switch-label {
-    background-color: #eee;
+    background-color: #e2e8f0;
 }
 
 #theme-toggle:checked + .theme-switch-label .ball {
@@ -553,7 +1051,7 @@ body.light-mode .social-links a:hover {
 }
 
 body.light-mode {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     color: #1a1a1a;
 }
 
@@ -605,4 +1103,731 @@ body.light-mode .close-btn {
 
 body.light-mode .close-btn:hover {
     color: #ff8a00;
+}
+
+/* Бесплатный курс */
+.free-course-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(0,255,135,0.1) 0%, rgba(96,239,255,0.1) 100%);
+}
+
+.free-course-promo {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.course-header {
+    margin-bottom: 30px;
+}
+
+.course-header .course-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.course-features ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.course-features li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.cta-button.free-btn {
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    font-size: 1.1rem;
+    padding: 15px 30px;
+}
+
+/* Преимущества */
+.advantages-section {
+    padding: 80px 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+.advantage-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.advantage-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 255, 135, 0.15);
+    border-color: rgba(0, 255, 135, 0.3);
+}
+
+.advantage-icon {
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    display: block;
+}
+
+.advantage-card h3 {
+    color: #00ff87;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.advantage-card p {
+    color: #b0b0b0;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Процесс обучения */
+.learning-process-section {
+    padding: 80px 20px;
+}
+
+.process-steps {
+    max-width: 800px;
+    margin: 50px auto 0;
+}
+
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    gap: 25px;
+}
+
+.step-number {
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    color: #000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+    text-align: left; /* Выравниваем весь контент по левому краю */
+}
+
+.step-content h3 {
+    color: #00ff87;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* Содержание курса */
+.course-content-section {
+    padding: 80px 20px;
+}
+
+.course-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    text-align: center;
+    color: #b0b0b0;
+    margin-top: 10px;
+}
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.topic-card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.topic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 255, 135, 0.15);
+    border-color: rgba(0, 255, 135, 0.3);
+}
+
+.topic-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.topic-card h3 {
+    color: #00ff87;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.topic-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.topic-card li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+    color: #b0b0b0;
+}
+
+.topic-card li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #00ff87;
+}
+
+.course-results {
+    background: rgba(0,255,135,0.1);
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(0,255,135,0.2);
+    text-align: center;
+}
+
+.course-results h3 {
+    color: #00ff87;
+    margin-bottom: 25px;
+}
+
+.results-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.result-item {
+    background: rgba(255,255,255,0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.course-conclusion {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00ff87;
+}
+
+.faq-section {
+    padding: 80px 20px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+.faq-list {
+    max-width: 800px;
+    margin: 50px auto 0;
+}
+
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.faq-item:hover {
+    border-color: rgba(0, 255, 135, 0.3);
+    transform: translateX(5px);
+}
+
+.faq-question {
+    color: #00ff87;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+}
+
+.faq-answer {
+    color: #b0b0b0;
+    line-height: 1.7;
+    font-size: 1rem;
+    text-align: left;
+}
+
+/* О нас - команда */
+.about-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(30,30,40,0.9) 100%);
+    border-radius: 2%;
+}
+
+.about-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-text {
+    text-align: center;
+    margin-bottom: 60px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-text h2 {
+    text-align: center;
+}
+
+.about-text h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    line-height: 1.7;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}
+
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 255, 135, 0.15);
+    border-color: rgba(0, 255, 135, 0.2);
+}
+
+.member-header {
+    margin-bottom: 25px;
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00ff87;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.member-titles {
+    text-align: center;
+}
+
+.member-name {
+    color: #00ff87;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.member-role {
+    color: #b0b0b0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.member-skills {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+}
+
+.member-skills li {
+    position: relative;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.member-skills li:hover {
+    background: rgba(0, 255, 135, 0.1);
+    transform: translateX(5px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .team-members {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .team-member {
+        padding: 25px 20px;
+    }
+    
+    .member-photo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-member {
+        padding: 20px 15px;
+    }
+    
+    .member-photo {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Светлая тема */
+body.light-mode .about-section {
+    background: linear-gradient(135deg, rgba(245,245,245,0.9) 0%, rgba(255,255,255,0.9) 100%);
+}
+
+body.light-mode .team-member {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .team-member:hover {
+    border-color: rgba(255, 138, 0, 0.3);
+    box-shadow: 0 15px 30px rgba(255, 138, 0, 0.15);
+}
+
+body.light-mode .about-text p {
+    color: #666;
+}
+
+body.light-mode .member-name {
+    color: #ff8a00;
+}
+
+body.light-mode .member-role {
+    color: #888;
+}
+
+body.light-mode .member-skills li {
+    color: #666;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .member-skills li:hover {
+    background: rgba(255, 138, 0, 0.1);
+}
+
+body.light-mode .member-photo {
+    border-color: #ff8a00;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Отзывы */
+.reviews-section {
+    padding: 80px 20px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.review-card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.review-avatar {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.review-name {
+    color: #00ff87;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.review-text {
+    color: #b0b0b0;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Telegram бот */
+.bot-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(96, 239, 255, 0.1) 100%);
+    border-radius: 5%;
+}
+
+.bot-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.bot-promo {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.bot-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.bot-description {
+    font-size: 1.3rem;
+    color: #b0b0b0;
+    margin-bottom: 40px;
+}
+
+.bot-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.bot-feature {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.bot-feature:hover {
+    transform: translateY(-3px);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+}
+
+.cta-button.bot-btn {
+    background: linear-gradient(45deg, #0088cc, #00ccff);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.cta-button.bot-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 136, 204, 0.4);
+    text-decoration: none;
+}
+
+/* Светлая тема для кнопки бота */
+body.light-mode .cta-button.bot-btn {
+    background: linear-gradient(45deg, #0077b6, #0096c7);
+}
+
+body.light-mode .cta-button.bot-btn:hover {
+    box-shadow: 0 10px 20px rgba(0, 119, 182, 0.4);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .cta-button.bot-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* Прозрачность */
+.transparency-section {
+    padding: 130px 20px;
+}
+
+.transparency-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.transparency-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.transparency-item:hover {
+    border-color: rgba(255, 138, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+.transparency-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.transparency-text {
+    color: #e0e0e0;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .about-avatars {
+        justify-content: center;
+    }
+    
+    .process-step {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-number {
+        align-self: center;
+    }
+    
+    .transparency-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .advantages-grid,
+    .topics-grid,
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Светлая тема для новых блоков */
+body.light-mode .free-course-section {
+    background: linear-gradient(135deg, rgba(255,138,0,0.1) 0%, rgba(229,46,113,0.1) 100%);
+}
+
+body.light-mode .advantage-card,
+body.light-mode .topic-card,
+body.light-mode .faq-item,
+body.light-mode .review-card,
+body.light-mode .transparency-item {
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+body.light-mode .course-results {
+    background: rgba(255,138,0,0.1);
+    border: 1px solid rgba(255,138,0,0.2);
+}
+
+body.light-mode .bot-section {
+    background: linear-gradient(135deg, rgba(0,123,255,0.1) 0%, rgba(96,239,255,0.1) 100%);
+}
+
+body.light-mode .course-features li,
+body.light-mode .bot-feature,
+body.light-mode .faq-answer,
+body.light-mode .review-text,
+body.light-mode .about-text p,
+body.light-mode .topic-card li,
+body.light-mode .course-description {
+    color: #666;
+}
+
+body.light-mode .advantage-card h3,
+body.light-mode .step-content h3,
+body.light-mode .topic-card h3,
+body.light-mode .faq-question,
+body.light-mode .review-name,
+body.light-mode .about-text h2,
+body.light-mode .course-results h3,
+body.light-mode .course-conclusion,
+body.light-mode .avatar-name {
+    color: #ff8a00;
+}
+
+body.light-mode .cta-button.free-btn {
+    background: linear-gradient(45deg, #ff8a00, #e52e71);
 }

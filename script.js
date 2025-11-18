@@ -39,11 +39,18 @@ themeToggle.addEventListener('change', () => {
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.radius = Math.random() * 2 + 1; 
-            this.speedX = (Math.random() - 0.5) * 2; 
+            this.radius = Math.random() * 2 + 1;
+            this.speedX = (Math.random() - 0.5) * 2;
             this.speedY = (Math.random() - 0.5) * 2;
-            this.color = `rgba(0, 255, 135, ${Math.random() * 0.7})`;
-            this.opacity = Math.random() * 0.7 + 0.3; 
+            
+            // Меняем базовый цвет в зависимости от темы
+            if (document.body.classList.contains('light-mode')) {
+                this.color = `rgba(255, 138, 0, ${Math.random() * 0.7})`;
+            } else {
+                this.color = `rgba(0, 255, 135, ${Math.random() * 0.7})`;
+            }
+            
+            this.opacity = Math.random() * 0.7 + 0.3;
             this.baseOpacity = this.opacity;
         }
 
@@ -62,7 +69,16 @@ themeToggle.addEventListener('change', () => {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 255, 135, ${this.opacity})`;
+            
+            // Меняем цвет частиц в зависимости от темы
+            if (document.body.classList.contains('light-mode')) {
+                // Оранжевые частицы для светлой темы
+                ctx.fillStyle = `rgba(255, 138, 0, ${this.opacity})`;
+            } else {
+                // Зеленые частицы для темной темы
+                ctx.fillStyle = `rgba(0, 255, 135, ${this.opacity})`;
+            }
+            
             ctx.fill();
         }
     }
