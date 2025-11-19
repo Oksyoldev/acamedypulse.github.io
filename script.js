@@ -171,3 +171,33 @@ if (menuHamburger && menuMobile) {
     });
 }
 
+// Легкая блокировка консоли
+(function() {
+    function isLocal() {
+        return window.location.hostname === 'localhost' || 
+               window.location.hostname === '127.0.0.1' ||
+               window.location.hostname.startsWith('192.168.') ||
+               window.location.hostname.startsWith('10.0.') ||
+               window.location.protocol === 'file:' ||
+               window.location.hostname === '';
+    }
+    
+    if (!isLocal()) {
+        // Блокируем F12, Ctrl+Shift+I, правый клик
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        document.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            return false;
+        });
+        
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+    }
+})();
