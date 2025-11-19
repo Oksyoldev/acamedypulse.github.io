@@ -126,4 +126,48 @@ themeToggle.addEventListener('change', () => {
 });
 
 
+// Плавная прокрутка для меню
+document.querySelectorAll('.menu-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Гамбургер меню для мобильных
+const menuHamburger = document.getElementById('menuHamburger');
+const menuMobile = document.getElementById('menuMobile');
+
+if (menuHamburger && menuMobile) {
+    menuHamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+        menuMobile.classList.toggle('active');
+    });
+    
+    // Закрываем меню при клике на ссылку
+    document.querySelectorAll('.menu-links-mobile a').forEach(link => {
+        link.addEventListener('click', function() {
+            menuHamburger.classList.remove('active');
+            menuMobile.classList.remove('active');
+        });
+    });
+    
+    // Закрываем меню при клике вне его
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.fixed-menu')) {
+            menuHamburger.classList.remove('active');
+            menuMobile.classList.remove('active');
+        }
+    });
+}
 

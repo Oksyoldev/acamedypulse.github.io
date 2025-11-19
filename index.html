@@ -7,7 +7,7 @@
     content="Обучение криптовалютам от PulseCrypto Academy. Курсы, гайды, поддержка — начни путь в крипте сегодня.">
     <link rel="stylesheet" href="styles/style.css">
     <meta name="author" content="Oksyol">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="криптовалюта, обучение, pulse academy, крипта, трейдинг, блокчейн, bitcoin, ethereum, nft">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://unpkg.com/phosphor-icons"></script>
@@ -24,7 +24,7 @@
 
     <div class="container">
     <div class="content">
-        <div class="logo-container">
+        <div class="logo-container" id="courses">
             <img src="images/logo.png" alt="Pulse Academy Logo" class="academy-logo">
         </div>
         <h1>Pulse Academy</h1>
@@ -68,6 +68,79 @@
                 </div>
     </div>
     </div>
+
+        <!-- Закрепленное меню -->
+    <nav class="fixed-menu">
+        <div class="menu-container">
+            <div class="menu-logo">
+                <img src="images/logo.png" alt="Pulse Academy" class="menu-logo-img">
+            </div>
+            
+            <!-- Меню для ПК (иконки) -->
+            <ul class="menu-links menu-links-pc">
+                <li><a href="#courses" title="Курсы">
+                    <i class="ph-graduation-cap"></i>
+                </a></li>
+                <li><a href="#advantages" title="Преимущества">
+                    <i class="ph-star"></i>
+                </a></li>
+                <li><a href="#process" title="Обучение">
+                    <i class="ph-book-open"></i>
+                </a></li>
+                <li><a href="#content" title="Содержание">
+                    <i class="ph-file-text"></i>
+                </a></li>
+                <li><a href="#faq" title="FAQ">
+                    <i class="ph-question"></i>
+                </a></li>
+                <li><a href="#team" title="Команда">
+                    <i class="ph-users"></i>
+                </a></li>
+                <li><a href="#reviews" title="Отзывы">
+                    <i class="ph-chat-circle-text"></i>
+                </a></li>
+            </ul>
+            
+            <!-- Гамбургер для мобильных -->
+            <div class="menu-hamburger" id="menuHamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Выпадающее меню для мобильных -->
+            <ul class="menu-links menu-links-mobile" id="menuMobile">
+                <li><a href="#courses">
+                    <i class="ph-graduation-cap"></i>
+                    <span>Курсы</span>
+                </a></li>
+                <li><a href="#advantages">
+                    <i class="ph-star"></i>
+                    <span>Преимущества</span>
+                </a></li>
+                <li><a href="#process">
+                    <i class="ph-book-open"></i>
+                    <span>Обучение</span>
+                </a></li>
+                <li><a href="#content">
+                    <i class="ph-file-text"></i>
+                    <span>Содержание</span>
+                </a></li>
+                <li><a href="#faq">
+                    <i class="ph-question"></i>
+                    <span>FAQ</span>
+                </a></li>
+                <li><a href="#team">
+                    <i class="ph-users"></i>
+                    <span>Команда</span>
+                </a></li>
+                <li><a href="#reviews">
+                    <i class="ph-chat-circle-text"></i>
+                    <span>Отзывы</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="creation-section">
         <div class="creation-container">
@@ -149,7 +222,7 @@
 
 
     <!-- Преимущества -->
-    <div class="advantages-section">
+    <div class="advantages-section" id="advantages">
         <div class="container">
             <h2 class="section-title">Почему нас выбирают</h2>
             <div class="advantages-grid">
@@ -178,7 +251,7 @@
     </div>
 
     <!-- Процесс обучения -->
-    <div class="learning-process-section">
+    <div class="learning-process-section" id="process">
         <div class="container">
             <h2>Как проходит обучение</h2>
             <div class="process-steps">
@@ -222,7 +295,7 @@
     </div>
 
     <!-- Содержание курса -->
-    <div class="course-content-section">
+    <div class="course-content-section" id="content">
         <div class="container">
             <h2>О чём наш бесплатный курс по криптовалютам?</h2>
             <p class="course-description">
@@ -299,7 +372,7 @@
     </div>
 
     <!-- FAQ -->
-    <div class="faq-section">
+    <div class="faq-section" id="faq">
         <div class="container">
             <h2 class="section-title">Часто задаваемые вопросы</h2>
             <div class="faq-grid">
@@ -332,7 +405,7 @@
     </div>
 
     <!-- О нас -->
-    <div class="about-section">
+    <div class="about-section" id="team">
     <div class="container">
         <div class="about-content">
             <div class="about-text">
@@ -392,7 +465,7 @@
     </div>
 
     <!-- Отзывы -->
-    <div class="reviews-section">
+    <div class="reviews-section" id="reviews">
         <div class="container">
             <h2>Отзывы наших студентов</h2>
             <div class="reviews-grid">
