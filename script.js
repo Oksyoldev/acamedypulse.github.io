@@ -171,33 +171,152 @@ if (menuHamburger && menuMobile) {
     });
 }
 
-// Легкая блокировка консоли
+// Усиленная блокировка консоли разработчика
 (function() {
-    function isLocal() {
-        return window.location.hostname === 'localhost' || 
-               window.location.hostname === '127.0.0.1' ||
-               window.location.hostname.startsWith('192.168.') ||
-               window.location.hostname.startsWith('10.0.') ||
-               window.location.protocol === 'file:' ||
-               window.location.hostname === '';
+    'use strict';
+    
+    // Разрешенные локальные хосты
+    function isLocalHost() {
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        
+        // Все локальные протоколы и адреса
+        if (protocol === 'file:') return true;
+        if (hostname === '') return true;
+        if (hostname === 'localhost') return true;
+        if (hostname === '127.0.0.1') return true;
+        if (hostname.startsWith('192.168.')) return true;
+        if (hostname.startsWith('10.0.')) return true;
+        if (hostname.startsWith('172.')) return true;
+        if (hostname.endsWith('.local')) return true;
+        
+        return false;
     }
     
-    if (!isLocal()) {
-        // Блокируем F12, Ctrl+Shift+I, правый клик
-        document.addEventListener('keydown', e => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+    const isLocal = isLocalHost();
+    
+    if (!isLocal) {
+        console.log('🔒 Активирована защита Pulse Academy');
+        
+        // === БЛОКИРОВКА КЛАВИШ ===
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === 'F12') {
                 e.preventDefault();
+                e.stopPropagation();
                 return false;
             }
-        });
+            
+            // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Ctrl+U
+            if (e.ctrlKey && e.key === 'U') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Ctrl+S
+            if (e.ctrlKey && e.key === 'S') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Mac: Cmd+Opt+I, Cmd+Opt+J, Cmd+Opt+C
+            if (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, true);
         
-        document.addEventListener('contextmenu', e => {
+        // === БЛОКИРОВКА ПРАВОГО КЛИКА ===
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             return false;
-        });
+        }, true);
         
+        
+        // === ОБНАРУЖЕНИЕ ОТКРЫТОЙ КОНСОЛИ ===
+        function detectDevTools() {
+            const start = Date.now();
+            debugger;
+            const end = Date.now();
+            
+            if (end - start > 100) {
+                // DevTools открыты
+                document.body.innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #0a0a0a; color: white; font-family: Arial, sans-serif;">
+                        <div style="text-align: center; padding: 20px;">
+                            <h1 style="color: #ff4444; margin-bottom: 20px;">🚫 Инструменты разработчика отключены</h1>
+                            <p>В целях безопасности использование DevTools запрещено.</p>
+                            <p style="color: #888; margin-top: 20px; font-size: 14px;">Pulse Academy Security System</p>
+                        </div>
+                    </div>
+                `;
+                // Бесконечный цикл для блокировки
+                setInterval(() => { debugger; }, 100);
+            }
+        }
+        
+        // Запускаем обнаружение
+        setInterval(detectDevTools, 1000);
+        
+        // === БЛОКИРОВКА КОНСОЛИ ===
+        const originalConsole = {
+            log: console.log,
+            warn: console.warn,
+            error: console.error,
+            info: console.info,
+            debug: console.debug
+        };
+        
+        // Переопределяем console методы
         console.log = function() {};
         console.warn = function() {};
         console.error = function() {};
+        console.info = function() {};
+        console.debug = function() {};
+        console.clear = function() {};
+        
+        // Блокируем доступ к console
+        Object.defineProperty(window, 'console', {
+            get: function() {
+                return {
+                    log: function() {},
+                    warn: function() {},
+                    error: function() {},
+                    info: function() {},
+                    debug: function() {},
+                    clear: function() {}
+                };
+            },
+            set: function() {}
+        });
+        
+    } else {
+        console.log('🔓 Локальный режим - все инструменты доступны');
     }
+    
 })();
