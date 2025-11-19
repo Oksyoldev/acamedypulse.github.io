@@ -449,6 +449,7 @@ h1 {
     gap: 30px;
     max-width: 1000px;
     margin: 0 auto;
+    padding: 20px 0 40px 0;
 }
 
 .course-card {
@@ -461,6 +462,8 @@ h1 {
     display: flex;
     flex-direction: column;
 }
+
+
 
 .course-card:hover {
     transform: translateY(-5px);
@@ -2193,6 +2196,7 @@ body.light-mode .member-photo {
     gap: 12px;
     font-size: 1rem; /* Уменьшил шрифт */
     transition: transform 0.3s ease;
+    text-align: left;
 }
 
 .bot-feature:hover {
@@ -2299,7 +2303,7 @@ body.light-mode .cta-button.bot-btn:hover {
 }
 
 .transparency-item:hover {
-    border-color: rgba(255, 138, 0, 0.3);
+    border-color: rgba(0, 255, 135, 0.3);
     transform: translateY(-5px);
 }
 
@@ -2506,4 +2510,44 @@ body {
 .transparency-section {
     max-width: 100%;
     overflow-x: hidden;
+}
+
+/* Светлая тема для заголовков секций */
+body.light-mode .section-title,
+body.light-mode .advantages-section h2,
+body.light-mode .faq-section h2,
+body.light-mode .about-section h2,
+body.light-mode .bot-section h2,
+body.light-mode .transparency-section h2,
+body.light-mode .reviews-section h2,
+body.light-mode .learning-process-section h2,
+body.light-mode .course-content-section h2 {
+    background: linear-gradient(45deg, #ff8a00, #e52e71) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Для секции "Как проходит обучение" если она не попадает под .section-title */
+body.light-mode .learning-process-section h2 {
+    background: linear-gradient(45deg, #ff8a00, #e52e71) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Для секции "Отзывы" */
+body.light-mode .reviews-section h2 {
+    background: linear-gradient(45deg, #ff8a00, #e52e71) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Для секции "Содержание курса" */
+body.light-mode .course-content-section h2 {
+    background: linear-gradient(45deg, #ff8a00, #e52e71) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body.light-mode .transparency-text {
+    color: #666 !important;
 }
