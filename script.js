@@ -318,5 +318,55 @@ if (menuHamburger && menuMobile) {
     } else {
         console.log('🔓 Локальный режим - все инструменты доступны');
     }
+// Прелоадер с анимацией прогресса
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    const percElement = document.querySelector('.perc');
+    const statusElement = document.querySelector('.status');
+    
+    if (preloader) {
+        let progress = 0;
+        const statusMessages = [
+            'LOADING MODULES...',
+            'INITIALIZING...',
+            'CONNECTING TO BLOCKCHAIN...',
+            'PULSE ACTIVE...',
+            'READY...'
+        ];
+        
+        let msgIndex = 0;
+        
+        const interval = setInterval(() => {
+            if (progress < 100) {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress > 100) progress = 100;
+                if (percElement) percElement.textContent = progress + '%';
+                
+                if (progress > 30 && msgIndex === 0) {
+                    msgIndex = 1;
+                    if (statusElement) statusElement.textContent = statusMessages[1];
+                }
+                if (progress > 60 && msgIndex === 1) {
+                    msgIndex = 2;
+                    if (statusElement) statusElement.textContent = statusMessages[2];
+                }
+                if (progress > 85 && msgIndex === 2) {
+                    msgIndex = 3;
+                    if (statusElement) statusElement.textContent = statusMessages[3];
+                }
+            } else {
+                clearInterval(interval);
+                if (statusElement) statusElement.textContent = statusMessages[4];
+                
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 800);
+                }, 400);
+            }
+        }, 60);
+    }
+});
     
 })();
