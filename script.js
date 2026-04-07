@@ -369,4 +369,89 @@ window.addEventListener('load', function() {
     }
 });
     
+// ========== ОТСЛЕЖИВАНИЕ КЛИКОВ ДЛЯ ЯНДЕКС.МЕТРИКИ ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Клик по бесплатному курсу
+    const freeCourseBtn = document.querySelector('.free-course .cta-button');
+    if (freeCourseBtn) {
+        freeCourseBtn.addEventListener('click', function() {
+            if (typeof ym !== 'undefined') {
+                ym(108437518, 'reachGoal', 'click_free_course');
+                console.log('✅ Метрика: клик на бесплатный курс');
+            }
+        });
+    }
+    
+    // 2. Клик по платному курсу (Узнать больше)
+    const proCourseBtn = document.getElementById('learnMoreBtn');
+    if (proCourseBtn) {
+        proCourseBtn.addEventListener('click', function() {
+            if (typeof ym !== 'undefined') {
+                ym(108437518, 'reachGoal', 'click_pro_course');
+                console.log('✅ Метрика: клик на платный курс (Узнать больше)');
+            }
+        });
+    }
+    
+    // 3. Клик по кнопке "Получить доступ" в модальном окне
+    const modalBtn = document.querySelector('.modal .cta-button');
+    if (modalBtn) {
+        modalBtn.addEventListener('click', function() {
+            if (typeof ym !== 'undefined') {
+                ym(108437518, 'reachGoal', 'click_modal_access');
+                console.log('✅ Метрика: клик на Получить доступ (модалка)');
+            }
+        });
+    }
+    
+    // 4. Клик по кнопке "Перейти в бота" (секция Telegram)
+    const botBtns = document.querySelectorAll('.bot-btn, .social-links a[href*="t.me"]');
+    botBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (typeof ym !== 'undefined') {
+                ym(108437518, 'reachGoal', 'click_bot');
+                console.log('✅ Метрика: переход в бота');
+            }
+        });
+    });
+});
+
+// ========== ОТСЛЕЖИВАНИЕ КЛИКОВ ДЛЯ GOOGLE ANALYTICS 4 ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Функция для отправки событий в GA4
+    function sendGAEvent(eventName) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', eventName, {
+                'event_category': 'button_click',
+                'event_label': eventName
+            });
+            console.log('✅ GA4: ' + eventName);
+        }
+    }
+    
+    // 1. Клик по бесплатному курсу
+    const freeCourseBtn = document.querySelector('.free-course .cta-button');
+    if (freeCourseBtn) {
+        freeCourseBtn.addEventListener('click', () => sendGAEvent('click_free_course'));
+    }
+    
+    // 2. Клик по платному курсу (Узнать больше)
+    const proCourseBtn = document.getElementById('learnMoreBtn');
+    if (proCourseBtn) {
+        proCourseBtn.addEventListener('click', () => sendGAEvent('click_pro_course'));
+    }
+    
+    // 3. Клик по кнопке "Получить доступ" в модалке
+    const modalBtn = document.querySelector('.modal .cta-button');
+    if (modalBtn) {
+        modalBtn.addEventListener('click', () => sendGAEvent('click_modal_access'));
+    }
+    
+    // 4. Клик по кнопке "Перейти в бота"
+    const botBtns = document.querySelectorAll('.bot-btn, .social-links a[href*="t.me"]');
+    botBtns.forEach(btn => {
+        btn.addEventListener('click', () => sendGAEvent('click_bot'));
+    });
+});
+
 })();
