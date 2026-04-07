@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadCourseRating() {
     try {
         // Ссылка на JSON в твоём репозитории
-        const response = await fetch('https://raw.githubusercontent.com/Oksyoldev/pulsehelper/main/rating_stats.json');
+        const response = await fetch('https://raw.githubusercontent.com/Oksyoldev/pulse-ratings/main/rating_stats.json');
         
         if (!response.ok) {
             console.log('⏳ Файл с оценками пока не создан (GitHub Actions обновит)');
