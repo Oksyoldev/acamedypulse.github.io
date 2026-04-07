@@ -3199,3 +3199,50 @@ body.light-mode .review-text {
         padding: 20px;
     }
 }
+
+/* ===== АВАТАРЫ ДЛЯ ОТЗЫВОВ ===== */
+.review-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00ff87;
+}
+
+.review-initials {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00ff87, #60efff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.review-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Светлая тема */
+body.light-mode .review-initials {
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    color: #fff;
+}
+
+body.light-mode .review-photo {
+    border-color: #ff8a00;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .review-photo, .review-initials {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}

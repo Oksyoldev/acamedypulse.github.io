@@ -531,8 +531,16 @@ async function loadRealReviews() {
                 starsHtml = '<div class="review-rating">' + '⭐'.repeat(review.rating) + '</div>';
             }
             
+            // Аватар (фото или инициалы)
+            let avatarHtml = '';
+            if (review.photo_url) {
+                avatarHtml = `<img src="${review.photo_url}" class="review-photo" alt="${review.username}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'review-initials\'>${getInitials(review.username)}</div>'">`;
+            } else {
+                avatarHtml = `<div class="review-initials">${getInitials(review.username)}</div>`;
+            }
+            
             reviewCard.innerHTML = `
-                <div class="review-avatar">${getReviewAvatar(review.username)}</div>
+                <div class="review-avatar">${avatarHtml}</div>
                 <div class="review-content">
                     <div class="review-name">${escapeHtml(review.username)}</div>
                     ${starsHtml}
@@ -550,6 +558,13 @@ async function loadRealReviews() {
         console.log('⚠️ Ошибка загрузки отзывов:', e);
         container.innerHTML = '<div class="loading-reviews">⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>';
     }
+}
+
+function getInitials(username) {
+    const name = username.replace('@', '');
+    if (name.length === 0) return '👤';
+    if (name.length === 1) return name.toUpperCase();
+    return name.substring(0, 2).toUpperCase();
 }
 
 function getReviewAvatar(username) {
