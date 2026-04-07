@@ -454,4 +454,107 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// ========================================
+// ЗАГРУЗКА ОЦЕНОК ДЛЯ ДВУХ КУРСОВ
+// ========================================
+
+async function loadCourseRating() {
+    try {
+        // Ссылка на JSON в твоём репозитории
+        const response = await fetch('https://raw.githubusercontent.com/Oksyoldev/pulsehelper/main/rating_stats.json');
+        
+        if (!response.ok) {
+            console.log('⏳ Файл с оценками пока не создан (GitHub Actions обновит)');
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Обновляем БЕСПЛАТНЫЙ курс
+        if (data.free && data.free.count > 0) {
+            updateRatingDisplay('free', data.free.average, data.free.count);
+        } else {
+            updateRatingDisplay('free', 0, 0);
+        }
+        
+        // Обновляем ПЛАТНЫЙ курс
+        if (data.pro && data.pro.count > 0) {
+            updateRatingDisplay('pro', data.pro.average, data.pro.count);
+        } else {
+            updateRatingDisplay('pro', 0, 0);
+        }
+        
+        console.log(`✅ Оценки загружены: бесплатный ${data.free?.average || 0}⭐ (${data.free?.count || 0} оценок), платный ${data.pro?.average || 0}⭐ (${data.pro?.count || 0} оценок)`);
+        
+    } catch(e) {
+        console.log('⚠️ Не удалось загрузить оценки:', e);
+    }
+}
+
+function updateRatingDisplay(courseType, rating, count) {
+    const container = document.getElementById(`${courseType}-course-rating`);
+    if (!container) return;
+    
+    const valueSpan = container.querySelector('.rating-value');
+    const starsDiv = container.querySelector('.rating-stars');
+    const countSpan = container.querySelector('.count-number');
+    
+    if (valueSpan) {
+        valueSpan.textContent = rating.toFixed(1);
+    }
+    
+    if (countSpan) {
+        countSpan.textContent = count;
+    }
+    
+    if (starsDiv) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        let starsHtml = '';
+        
+        for (let i = 1; i <= 5; i++) {
+            if (i <= fullStars) {
+                starsHtml += '★';
+            } else if (i === fullStars + 1 && hasHalfStar) {
+                starsHtml += '½';
+            } else {
+                starsHtml += '☆';
+            }
+        }
+        starsDiv.innerHTML = starsHtml;
+    }
+}
+
+// Переключение между курсами
+function initRatingTabs() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.rating-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const courseType = tab.getAttribute('data-course');
+            
+            // Обновляем активный таб
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Показываем нужный контент
+            contents.forEach(content => content.classList.remove('active'));
+            const activeContent = document.getElementById(`${courseType}-course-rating`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+        });
+    });
+}
+
+// Запускаем всё при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    loadCourseRating();
+    initRatingTabs();
+    
+    // Обновляем каждые 5 минут, если страница открыта
+    setInterval(loadCourseRating, 5 * 60 * 1000);
+});
+
 })();

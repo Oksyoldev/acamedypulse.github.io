@@ -715,6 +715,53 @@
         </div>
     </div>
 
+        <!-- Блок оценки курса с переключением -->
+    <div class="rating-section" id="course-rating-block">
+        <div class="container">
+            <div class="rating-card">
+                <div class="rating-header">
+                    <span class="rating-icon">⭐</span>
+                    <span class="rating-title">Оценка курса</span>
+                </div>
+                
+                <!-- Переключатель курсов -->
+                <div class="rating-tabs">
+                    <button class="tab-btn active" data-course="free">🎓 Бесплатный</button>
+                    <button class="tab-btn" data-course="pro">💎 Профессиональный</button>
+                </div>
+                
+                <!-- Контент для бесплатного курса -->
+                <div id="free-course-rating" class="rating-content active">
+                    <div class="rating-value-wrapper">
+                        <span class="rating-value">0</span>
+                        <span class="rating-max">/5</span>
+                    </div>
+                    <div class="rating-stars">☆☆☆☆☆</div>
+                    <div class="rating-count">
+                        <span class="count-number">0</span> учеников оценили
+                    </div>
+                </div>
+                
+                <!-- Контент для платного курса -->
+                <div id="pro-course-rating" class="rating-content">
+                    <div class="rating-value-wrapper">
+                        <span class="rating-value">0</span>
+                        <span class="rating-max">/5</span>
+                    </div>
+                    <div class="rating-stars">☆☆☆☆☆</div>
+                    <div class="rating-count">
+                        <span class="count-number">0</span> учеников оценили
+                    </div>
+                </div>
+                
+                <div class="rating-note">
+                    <span>📊 На основе реальных отзывов</span>
+                    <span>🔄 Обновляется автоматически</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="social-links">
             <a href="https://t.me/helppulse_bot?start=web" target="_blank">
