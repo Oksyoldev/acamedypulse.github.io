@@ -491,6 +491,91 @@ async function loadCourseRating() {
     }
 }
 
+// ========== ЗАГРУЗКА РЕАЛЬНЫХ ОТЗЫВОВ ==========
+async function loadRealReviews() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+    
+    try {
+        // Загружаем отзывы из публичного репозитория
+        const response = await fetch('https://raw.githubusercontent.com/Oksyoldev/pulse-ratings/main/reviews.json');
+        
+        if (!response.ok) {
+            container.innerHTML = '<div class="loading-reviews">📭 Пока нет отзывов. Будь первым!</div>';
+            return;
+        }
+        
+        const data = await response.json();
+        
+        if (!data.reviews || data.reviews.length === 0) {
+            container.innerHTML = '<div class="loading-reviews">📭 Пока нет отзывов. Оставь свой в Telegram боте!</div>';
+            return;
+        }
+        
+        container.innerHTML = '';
+        
+        data.reviews.forEach(review => {
+            const reviewCard = document.createElement('div');
+            reviewCard.className = 'review-card';
+            
+            // Форматируем дату
+            let dateStr = 'недавно';
+            if (review.date) {
+                const date = new Date(review.date);
+                dateStr = date.toLocaleDateString('ru-RU');
+            }
+            
+            // Звёзды (если есть оценка)
+            let starsHtml = '';
+            if (review.rating && review.rating > 0) {
+                starsHtml = '<div class="review-rating">' + '⭐'.repeat(review.rating) + '</div>';
+            }
+            
+            reviewCard.innerHTML = `
+                <div class="review-avatar">${getReviewAvatar(review.username)}</div>
+                <div class="review-content">
+                    <div class="review-name">${escapeHtml(review.username)}</div>
+                    ${starsHtml}
+                    <div class="review-text">"${escapeHtml(review.review)}"</div>
+                    <div class="review-date">📅 ${dateStr}</div>
+                </div>
+            `;
+            
+            container.appendChild(reviewCard);
+        });
+        
+        console.log(`✅ Загружено ${data.reviews.length} отзывов`);
+        
+    } catch(e) {
+        console.log('⚠️ Ошибка загрузки отзывов:', e);
+        container.innerHTML = '<div class="loading-reviews">⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>';
+    }
+}
+
+function getReviewAvatar(username) {
+    const emojis = ['😊', '🤩', '🎯', '🚀', '💎', '🔥', '⭐', '📚', '💰', '🧠', '💪', '🏆'];
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+        hash = ((hash << 5) - hash) + username.charCodeAt(i);
+        hash |= 0;
+    }
+    return emojis[Math.abs(hash) % emojis.length];
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Запускаем загрузку отзывов при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    loadRealReviews();
+    
+    // Обновляем отзывы каждые 10 минут (опционально)
+    setInterval(loadRealReviews, 10 * 60 * 1000);
+});
+
 function updateRatingDisplay(courseType, rating, count) {
     const container = document.getElementById(`${courseType}-course-rating`);
     if (!container) return;
