@@ -3246,3 +3246,58 @@ body.light-mode .review-photo {
         font-size: 1rem;
     }
 }
+
+/* ===== ТАБЫ ДЛЯ ОТЗЫВОВ ===== */
+.reviews-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.reviews-tab-btn {
+    padding: 12px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: #b0b0b0;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reviews-tab-btn.active {
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    color: #000;
+    border-color: transparent;
+}
+
+.reviews-tab-btn:hover:not(.active) {
+    background: rgba(0, 255, 135, 0.1);
+    color: #00ff87;
+}
+
+/* Светлая тема */
+body.light-mode .reviews-tab-btn {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #666;
+}
+
+body.light-mode .reviews-tab-btn.active {
+    background: linear-gradient(45deg, #ff8a00, #e52e71);
+    color: #fff;
+}
+
+body.light-mode .reviews-tab-btn:hover:not(.active) {
+    background: rgba(255, 138, 0, 0.1);
+    color: #ff8a00;
+}
+
+@media (max-width: 768px) {
+    .reviews-tab-btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+    }
+}
