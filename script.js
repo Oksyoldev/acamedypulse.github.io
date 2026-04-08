@@ -464,7 +464,8 @@ if (menuHamburger && menuMobile) {
 
                 let avatarHtml = '';
                 if (review.photo_url) {
-                    avatarHtml = `<img src="${review.photo_url}" class="review-photo" alt="${review.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'review-initials\'>${getInitials(review.name)}</div>'">`;
+                    const photoUrl = `https://raw.githubusercontent.com/Oksyoldev/pulse-ratings/main/${review.photo_url}`;
+                    avatarHtml = `<img src="${photoUrl}" class="review-photo" alt="${review.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'review-initials\'>${getInitials(review.name)}</div>'">`;
                 } else {
                     avatarHtml = `<div class="review-initials">${getInitials(review.name)}</div>`;
                 }
